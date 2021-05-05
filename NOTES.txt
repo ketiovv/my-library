@@ -1,0 +1,24 @@
+https://www.figma.com/file/3Xx6gisqthWZAyxC66642u/my-library?node-id=0%3A1
+
+Requirements:
+
+Burza mózgów
+	- Własna baza książek, nie korzystam z zewnętrznego
+	- Lista książek w bazie(widok listy książek w bazie)
+	- Można dodać książkę do bazy (widok dodania książki)
+	- Można usunąć książkę z bazy ( widok szczegółów książki)
+	- Oznaczanie książki jako przeczytana => ocena książki lub brak oceny (widok 			szczegółów ksiązki)
+	- Widok moje oceny
+
+Podsumowanie
+	Encje: User(Auth), Książka(Tytuł, Autor, Opis, Kategoria)
+	Widoki: lista książek, szczegóły książki , dodanie książki, moje oceny
+
+----------------------
+Additional:
+	- Średnia ocen książki, ilość ocen
+	- Dodanie encji "Autor", przeglądanie książek autora
+	- User ma profil
+	- User ma w profilu przeczytane książki ()
+	- Zaznaczanie książki jako posiadana
+	- User ma kolekcje posiadanych książek w profilu
