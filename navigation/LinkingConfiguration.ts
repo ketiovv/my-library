@@ -14,12 +14,14 @@ export default {
         screens: {
           Library: {
             screens: {
-              LibraryScreen: 'one',
+              LibraryScreen: 'library',
+              NewBookScreen: 'new-book',
+              BookDetailsScreen: 'book-details',
             },
           },
           MyRates: {
             screens: {
-              MyRatesScreen: 'two',
+              MyRatesScreen: 'my-rates',
             },
           },
         },

@@ -1,10 +1,9 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
-
-import EditScreenInfo from "../components/EditScreenInfo";
+import { Button, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 
-export default function LibraryScreen() {
+// TODO: specify props type
+const LibraryScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Library</Text>
@@ -13,10 +12,19 @@ export default function LibraryScreen() {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <EditScreenInfo path="/screens/LibraryScreen.tsx" />
+      <Button
+        title="Add new book"
+        onPress={() => navigation.navigate("NewBookScreen")}
+      />
+      <Button
+        title="Book details"
+        onPress={() => navigation.navigate("BookDetailsScreen")}
+      />
     </View>
   );
-}
+};
+
+export default LibraryScreen;
 
 const styles = StyleSheet.create({
   container: {

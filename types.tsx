@@ -15,6 +15,8 @@ export type BottomTabParamList = {
 
 export type LibraryParamList = {
   LibraryScreen: undefined;
+  NewBookScreen: undefined;
+  BookDetailsScreen: undefined;
 };
 
 export type MyRatesParamList = {

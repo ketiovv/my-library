@@ -10,8 +10,10 @@ import * as React from "react";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+import BookDetailsScreen from "../screens/BookDetailsScreen";
 import LibraryScreen from "../screens/LibraryScreen";
 import MyRatesScreen from "../screens/MyRatesScreen";
+import NewBookScreen from "../screens/NewBookScreen";
 import {
   BottomTabParamList,
   LibraryParamList,
@@ -20,7 +22,7 @@ import {
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+const BottomTabNavigator = () => {
   const colorScheme = useColorScheme();
 
   return (
@@ -48,22 +50,24 @@ export default function BottomTabNavigator() {
       />
     </BottomTab.Navigator>
   );
-}
+};
+
+export default BottomTabNavigator;
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: {
+const TabBarIcon = (props: {
   name: React.ComponentProps<typeof Ionicons>["name"];
   color: string;
-}) {
+}) => {
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
+};
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const LibraryStack = createStackNavigator<LibraryParamList>();
 
-function LibraryNavigator() {
+const LibraryNavigator = () => {
   return (
     <LibraryStack.Navigator>
       <LibraryStack.Screen
@@ -71,13 +75,23 @@ function LibraryNavigator() {
         component={LibraryScreen}
         options={{ headerTitle: "Library Title" }}
       />
+      <LibraryStack.Screen
+        name="NewBookScreen"
+        component={NewBookScreen}
+        options={{ headerTitle: "New book" }}
+      />
+      <LibraryStack.Screen
+        name="BookDetailsScreen"
+        component={BookDetailsScreen}
+        options={{ headerTitle: "Book Details" }}
+      />
     </LibraryStack.Navigator>
   );
-}
+};
 
 const MyRatesStack = createStackNavigator<MyRatesParamList>();
 
-function MyRatesNavigator() {
+const MyRatesNavigator = () => {
   return (
     <MyRatesStack.Navigator>
       <MyRatesStack.Screen
@@ -87,4 +101,4 @@ function MyRatesNavigator() {
       />
     </MyRatesStack.Navigator>
   );
-}
+};
