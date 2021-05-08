@@ -1,19 +1,27 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import * as React from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { RootStackParamList } from "../types";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { AuthenticationParamList } from "../../types";
 
-const RegisterScreen = ({
+const LandingScreen = ({
   navigation,
-}: StackScreenProps<RootStackParamList, "NotFound">) => {
+}: StackScreenProps<AuthenticationParamList, "LandingScreen">) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Register page</Text>
+      <Text style={styles.title}>Landing page</Text>
+      <Button
+        title={"Login"}
+        onPress={() => navigation.navigate("LoginScreen")}
+      />
+      <Button
+        title={"Register"}
+        onPress={() => navigation.navigate("RegisterScreen")}
+      />
     </View>
   );
 };
 
-export default RegisterScreen;
+export default LandingScreen;
 
 const styles = StyleSheet.create({
   container: {

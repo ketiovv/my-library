@@ -28,5 +28,5 @@ export type AuthenticationParamList = {
   LandingScreen: undefined;
   LoginScreen: undefined;
   RegisterScreen: undefined;
-  NotFound: undefined;
+  Root: undefined;
 };

@@ -1,12 +1,11 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { Text, View } from "../../components/Themed";
 
-import { Text, View } from "../components/Themed";
-
-const NewBookScreen = () => {
+const BookDetailsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>New book</Text>
+      <Text style={styles.title}>Book Details Screen</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
@@ -16,7 +15,7 @@ const NewBookScreen = () => {
   );
 };
 
-export default NewBookScreen;
+export default BookDetailsScreen;
 
 const styles = StyleSheet.create({
   container: {

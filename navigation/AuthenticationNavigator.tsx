@@ -1,25 +1,11 @@
-import { Ionicons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { Button } from "react-native";
-import { View } from "../components/Themed";
 
-import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import BookDetailsScreen from "../screens/BookDetailsScreen";
-import LandingScreen from "../screens/LandingScreen";
-import LibraryScreen from "../screens/LibraryScreen";
-import LoginScreen from "../screens/LoginScreen";
-import MyRatesScreen from "../screens/MyRatesScreen";
-import NewBookScreen from "../screens/NewBookScreen";
-import RegisterScreen from "../screens/RegisterScreen";
-import {
-  AuthenticationParamList,
-  BottomTabParamList,
-  LibraryParamList,
-  MyRatesParamList,
-} from "../types";
+import LandingScreen from "../screens/Authentication/LandingScreen";
+import LoginScreen from "../screens/Authentication/LoginScreen";
+import RegisterScreen from "../screens/Authentication/RegisterScreen";
+import { AuthenticationParamList } from "../types";
 
 const AuthenticationStack = createStackNavigator<AuthenticationParamList>();
 

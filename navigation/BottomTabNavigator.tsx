@@ -10,10 +10,10 @@ import * as React from "react";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import BookDetailsScreen from "../screens/BookDetailsScreen";
-import LibraryScreen from "../screens/LibraryScreen";
-import MyRatesScreen from "../screens/MyRatesScreen";
-import NewBookScreen from "../screens/NewBookScreen";
+import BookDetailsScreen from "../screens/Library/BookDetailsScreen";
+import LibraryScreen from "../screens/Library/LibraryScreen";
+import MyRatesScreen from "../screens/MyRates/MyRatesScreen";
+import NewBookScreen from "../screens/Library/NewBookScreen";
 import {
   BottomTabParamList,
   LibraryParamList,
