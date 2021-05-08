@@ -26,6 +26,13 @@ export default {
           },
         },
       },
+      AuthenticationNavigator:{
+        screens:{
+          LandingScreen: 'landing',
+          LoginScreen: 'login',
+          RegisterScreen: 'register',
+        },
+      },
       NotFound: '*',
     },
   },
