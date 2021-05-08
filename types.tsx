@@ -5,6 +5,7 @@
 
 export type RootStackParamList = {
   Root: undefined;
+  AuthenticationNavigator: undefined;
   NotFound: undefined;
 };
 
@@ -21,4 +22,11 @@ export type LibraryParamList = {
 
 export type MyRatesParamList = {
   MyRatesScreen: undefined;
+};
+
+export type AuthenticationParamList = {
+  LandingScreen: undefined;
+  LoginScreen: undefined;
+  RegisterScreen: undefined;
+  NotFound: undefined;
 };
