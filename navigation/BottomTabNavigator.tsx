@@ -19,11 +19,18 @@ import {
   LibraryParamList,
   MyRatesParamList,
 } from "../types";
+import { fetchUser } from "../redux/actions";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-const BottomTabNavigator = () => {
+export const BottomTabNavigator = () => {
   const colorScheme = useColorScheme();
+
+  React.useEffect(() => {
+    fetchUser();
+  });
 
   return (
     <BottomTab.Navigator
@@ -51,8 +58,6 @@ const BottomTabNavigator = () => {
     </BottomTab.Navigator>
   );
 };
-
-export default BottomTabNavigator;
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
@@ -102,3 +107,11 @@ const MyRatesNavigator = () => {
     </MyRatesStack.Navigator>
   );
 };
+
+const mapStateToProps = (store: any) => ({
+  currentUser: store.userState.currentUser,
+});
+const mapDispatchProps = (dispatch: any) =>
+  bindActionCreators({ fetchUser }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchProps)(BottomTabNavigator);

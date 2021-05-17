@@ -3,6 +3,7 @@ import * as React from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { AuthenticationParamList } from "../../types";
 import firebase from "firebase";
+import "firebase/firestore";
 
 const RegisterScreen = ({
   navigation,
@@ -15,8 +16,13 @@ const RegisterScreen = ({
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
+        const user = firebase.auth().currentUser;
+        if (user !== null) {
+          firebase.firestore().collection("users").doc(user.uid).set({
+            email,
+          });
+        }
         console.log(result);
-        navigation.navigate("LoginScreen");
       })
       .catch((error) => {
         console.log(error);

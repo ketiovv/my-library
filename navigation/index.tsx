@@ -9,24 +9,55 @@ import {
   DarkTheme,
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import firebase from "firebase";
 import * as React from "react";
-import { ColorSchemeName } from "react-native";
+import { ColorSchemeName, View } from "react-native";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "../redux/reducers";
+import thunk from "redux-thunk";
+
+const store = createStore(rootReducer, applyMiddleware());
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
-      <RootNavigator />
-    </NavigationContainer>
-  );
+  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
+  const [loaded, setIsLoaded] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        setLoggedIn(false);
+        setIsLoaded(true);
+      } else {
+        setLoggedIn(true);
+        setIsLoaded(true);
+      }
+    });
+  });
+
+  if (!loaded) {
+    return <View>Loading...</View>;
+  } else {
+    return (
+      <NavigationContainer
+        linking={LinkingConfiguration}
+        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      >
+        {loggedIn && (
+          <Provider store={store}>
+            <RootNavigator />
+          </Provider>
+        )}
+        {!loggedIn && <AuthenticationNavigator />}
+      </NavigationContainer>
+    );
+  }
 };
 
 export default Navigation;
@@ -39,11 +70,6 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen
-        name="AuthenticationNavigator"
-        component={AuthenticationNavigator}
-        options={{ title: "Oops!" }}
-      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

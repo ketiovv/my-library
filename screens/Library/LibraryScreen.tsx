@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Button, StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
+import firebase from "firebase";
 
-// TODO: specify props type
 const LibraryScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
@@ -20,6 +20,7 @@ const LibraryScreen = ({ navigation }: any) => {
         title="Book details"
         onPress={() => navigation.navigate("BookDetailsScreen")}
       />
+      <Button title="Logout" onPress={() => firebase.auth().signOut()} />
     </View>
   );
 };
