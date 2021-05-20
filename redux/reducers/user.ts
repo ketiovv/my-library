@@ -1,3 +1,5 @@
+import firebase from "firebase";
+
 const initialState = {
     currentUser: null
 }
