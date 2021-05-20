@@ -23,7 +23,9 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../redux/reducers";
 import thunk from "redux-thunk";
 
-const store = createStore(rootReducer, applyMiddleware());
+export const store = createStore(rootReducer, applyMiddleware(thunk));
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
   const [loggedIn, setLoggedIn] = React.useState<boolean>(false);

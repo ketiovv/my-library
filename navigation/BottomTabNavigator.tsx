@@ -20,16 +20,19 @@ import {
   MyRatesParamList,
 } from "../types";
 import { fetchUser } from "../redux/actions";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { AnyAction, bindActionCreators } from "redux";
+import { connect, ConnectedProps } from "react-redux";
+import { AppDispatch, RootState } from ".";
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
-
-export const BottomTabNavigator = () => {
+export const BottomTabNavigator = (props: PropsFromRedux) => {
   const colorScheme = useColorScheme();
 
   React.useEffect(() => {
     fetchUser();
+
+    //@ts-ignore
+    const { currentUser } = props.currentUser;
+    console.log(currentUser);
   });
 
   return (
@@ -71,7 +74,6 @@ const TabBarIcon = (props: {
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const LibraryStack = createStackNavigator<LibraryParamList>();
-
 const LibraryNavigator = () => {
   return (
     <LibraryStack.Navigator>
@@ -95,7 +97,6 @@ const LibraryNavigator = () => {
 };
 
 const MyRatesStack = createStackNavigator<MyRatesParamList>();
-
 const MyRatesNavigator = () => {
   return (
     <MyRatesStack.Navigator>
@@ -108,10 +109,16 @@ const MyRatesNavigator = () => {
   );
 };
 
-const mapStateToProps = (store: any) => ({
+const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+
+const mapStateToProps = (store: RootState) => ({
   currentUser: store.userState.currentUser,
 });
-const mapDispatchProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch: any) =>
   bindActionCreators({ fetchUser }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchProps)(BottomTabNavigator);
+export default connect(mapStateToProps, mapDispatchToProps)(BottomTabNavigator);
+
+type PropsFromRedux = ConnectedProps<typeof connect>;
+
+// type Props = PropsFromRedux & { backgroundColor: string };
