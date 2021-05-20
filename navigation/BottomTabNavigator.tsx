@@ -26,14 +26,13 @@ import { AppDispatch, RootState } from ".";
 
 export const BottomTabNavigator = (props: PropsFromRedux) => {
   const colorScheme = useColorScheme();
+  const { currentUser } = props;
+  console.log(currentUser);
 
   React.useEffect(() => {
-    fetchUser();
-
     //@ts-ignore
-    const { currentUser } = props.currentUser;
-    console.log(currentUser);
-  });
+    props.fetchUser();
+  }, []);
 
   return (
     <BottomTab.Navigator
@@ -114,11 +113,9 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const mapStateToProps = (store: RootState) => ({
   currentUser: store.userState.currentUser,
 });
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch: AppDispatch) =>
   bindActionCreators({ fetchUser }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomTabNavigator);
 
 type PropsFromRedux = ConnectedProps<typeof connect>;
-
-// type Props = PropsFromRedux & { backgroundColor: string };
