@@ -1,8 +1,3 @@
-/**
- * If you are not familiar with React Navigation, check out the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import {
   NavigationContainer,
   DefaultTheme,
@@ -11,7 +6,7 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 import firebase from "firebase";
 import * as React from "react";
-import { ColorSchemeName, View } from "react-native";
+import { Button, ColorSchemeName, View } from "react-native";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";

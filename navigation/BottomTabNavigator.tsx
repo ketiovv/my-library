@@ -1,8 +1,3 @@
-/**
- * Learn more about createBottomTabNavigator:
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -23,73 +18,90 @@ import { fetchUser } from "../redux/actions";
 import { AnyAction, bindActionCreators } from "redux";
 import { connect, ConnectedProps } from "react-redux";
 import { AppDispatch, RootState } from ".";
+import { Button, View } from "react-native";
+import firebase from "firebase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBook,
+  faPlus,
+  faSignOutAlt,
+  faStar,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
 export const BottomTabNavigator = (props: PropsFromRedux) => {
   const colorScheme = useColorScheme();
   const { currentUser } = props;
-  console.log(currentUser);
 
   React.useEffect(() => {
-    //@ts-ignore
     props.fetchUser();
   }, []);
 
   return (
     <BottomTab.Navigator
       initialRouteName="Library"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      activeColor="white"
+      inactiveColor="gray"
     >
       <BottomTab.Screen
         name="Library"
         component={LibraryNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
+          tabBarIcon: () => <FontAwesomeIcon icon={faBook} />,
         }}
       />
       <BottomTab.Screen
         name="MyRates"
         component={MyRatesNavigator}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
+          tabBarIcon: () => <FontAwesomeIcon icon={faStar} />,
         }}
       />
     </BottomTab.Navigator>
   );
 };
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-const TabBarIcon = (props: {
-  name: React.ComponentProps<typeof Ionicons>["name"];
-  color: string;
-}) => {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-};
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const LibraryStack = createStackNavigator<LibraryParamList>();
-const LibraryNavigator = () => {
+const LibraryNavigator = ({ navigation }: any) => {
   return (
     <LibraryStack.Navigator>
       <LibraryStack.Screen
         name="LibraryScreen"
         component={LibraryScreen}
-        options={{ headerTitle: "Library Title" }}
+        options={{
+          headerTitle: "Library",
+          headerRight: () => (
+            <View>
+              <FontAwesomeIcon
+                icon={faPlus}
+                onClick={() => navigation.navigate("NewBookScreen")}
+              />
+            </View>
+          ),
+        }}
       />
       <LibraryStack.Screen
         name="NewBookScreen"
         component={NewBookScreen}
-        options={{ headerTitle: "New book" }}
+        options={{
+          headerTitle: "New book",
+        }}
       />
       <LibraryStack.Screen
         name="BookDetailsScreen"
         component={BookDetailsScreen}
-        options={{ headerTitle: "Book Details" }}
+        options={{
+          headerTitle: "Book Details",
+          headerRight: () => (
+            <FontAwesomeIcon
+              icon={faTrash}
+              onClick={() => console.log("test")}
+            />
+          ),
+        }}
       />
     </LibraryStack.Navigator>
   );
@@ -102,13 +114,19 @@ const MyRatesNavigator = () => {
       <MyRatesStack.Screen
         name="MyRatesScreen"
         component={MyRatesScreen}
-        options={{ headerTitle: "My rates Title" }}
+        options={{
+          headerTitle: "My rates",
+          headerRight: () => (
+            <FontAwesomeIcon
+              icon={faSignOutAlt}
+              onClick={() => firebase.auth().signOut()}
+            />
+          ),
+        }}
       />
     </MyRatesStack.Navigator>
   );
 };
-
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 const mapStateToProps = (store: RootState) => ({
   currentUser: store.userState.currentUser,
@@ -116,6 +134,8 @@ const mapStateToProps = (store: RootState) => ({
 const mapDispatchToProps = (dispatch: AppDispatch) =>
   bindActionCreators({ fetchUser }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(BottomTabNavigator);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connect>;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(BottomTabNavigator);

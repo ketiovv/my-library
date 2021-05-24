@@ -12,15 +12,11 @@ const LibraryScreen = ({ navigation }: any) => {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <Button
-        title="Add new book"
-        onPress={() => navigation.navigate("NewBookScreen")}
-      />
+
       <Button
         title="Book details"
         onPress={() => navigation.navigate("BookDetailsScreen")}
       />
-      <Button title="Logout" onPress={() => firebase.auth().signOut()} />
     </View>
   );
 };

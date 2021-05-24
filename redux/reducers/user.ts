@@ -5,11 +5,11 @@ interface User {
     email:string;
 }
 
-interface TestState {
+interface UserState {
     currentUser: User | null;
 }
 
-const initialState: TestState = {
+const initialState: UserState = {
     currentUser: null
 }
 export const user = (state = initialState, action: AnyAction) => {
