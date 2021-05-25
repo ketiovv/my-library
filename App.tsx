@@ -6,7 +6,10 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import * as firebase from "firebase";
 import firebaseConfigJson from "./firebaseConfig.json";
-import { Provider as PaperProvider } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Provider as PaperProvider,
+} from "react-native-paper";
 
 if (firebase.default.apps.length === 0) {
   firebase.default.initializeApp(firebaseConfigJson);
@@ -17,7 +20,7 @@ export default function App() {
   const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
-    return null;
+    return <ActivityIndicator animating={true} color="Black" size="large" />;
   } else {
     return (
       <PaperProvider>

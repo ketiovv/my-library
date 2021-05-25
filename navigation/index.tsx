@@ -9,7 +9,13 @@ import {
 } from "@react-navigation/stack";
 import firebase from "firebase";
 import * as React from "react";
-import { Button, ColorSchemeName, View, Text } from "react-native";
+import {
+  Button,
+  ColorSchemeName,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
@@ -43,7 +49,7 @@ const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
   });
 
   if (!loaded) {
-    return <Text>Loading..</Text>;
+    return <ActivityIndicator animating={true} color="Black" size="large" />;
   } else {
     return (
       <NavigationContainer

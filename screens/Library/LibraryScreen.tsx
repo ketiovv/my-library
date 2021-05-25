@@ -1,53 +1,79 @@
 import * as React from "react";
-import { Button, StyleSheet } from "react-native";
+import { Button, Dimensions, StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
 import firebase from "firebase";
 import BookListItem from "../../components/LibraryScreen/BookListItem";
-import { Searchbar } from "react-native-paper";
+import { ActivityIndicator, Searchbar } from "react-native-paper";
 import Book from "../../types/Book";
+import { ScrollView } from "react-native-gesture-handler";
+import { useIsFocused } from "@react-navigation/native";
 
 const LibraryScreen = ({ navigation }: any) => {
+  const isFocused = useIsFocused();
   const [searchQuery, setSearchQuery] = React.useState<string>("");
-  const onChangeSearch = (query: string) => setSearchQuery(query);
+  const onChangeSearch = (query: string) => {
+    setSearchQuery(query);
+    loadBooks(query);
+  };
+
   const [books, setBooks] = React.useState<Book[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const loadBooks = React.useCallback(() => {
+  const loadBooks = React.useCallback((sq: string) => {
+    setIsLoading(true);
+
     firebase
       .firestore()
       .collection("books")
+      .orderBy("name", "asc")
       .get()
       .then((snapshot) => {
-        const books = snapshot.docs.map((doc) => doc.data());
-        setBooks(books as Book[]);
+        const books = snapshot.docs.map((doc) => doc.data() as Book);
+        const ids = snapshot.docs.map((doc) => doc.id);
+
+        for (var i = 0; i < books.length; i++) {
+          books[i].uid = ids[i];
+        }
+
+        if (sq !== "") {
+          setBooks(
+            books.filter((book) =>
+              book.name.toLowerCase().includes(sq.toLowerCase())
+            )
+          );
+        } else {
+          setBooks(books);
+        }
+
         setIsLoading(false);
       });
   }, []);
 
   React.useEffect(() => {
-    loadBooks();
-    console.log(books);
-  }, []);
+    loadBooks(searchQuery);
+  }, [isFocused]);
 
-  if (isLoading || books.length === 0) {
-    return <Text>Loading..</Text>;
-  } else {
-    return (
-      <View style={styles.container}>
-        <Searchbar
-          style={styles.searchBar}
-          placeholder="Search"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-        />
-        {books.map((book, index) => {
-          return (
-            <BookListItem key={index} book={book} navigation={navigation} />
-          );
-        })}
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <Searchbar
+        style={styles.searchBar}
+        placeholder="Search"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+      />
+      {isLoading ? (
+        <ActivityIndicator animating={true} color="Black" size="large" />
+      ) : (
+        <ScrollView contentContainerStyle={styles.booksContainer}>
+          {books.map((book, index) => {
+            return (
+              <BookListItem key={index} book={book} navigation={navigation} />
+            );
+          })}
+        </ScrollView>
+      )}
+    </View>
+  );
 };
 
 export default LibraryScreen;
@@ -55,9 +81,13 @@ export default LibraryScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 5,
   },
   searchBar: {
     marginBottom: 10,
+  },
+  booksContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });

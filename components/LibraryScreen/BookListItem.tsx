@@ -1,6 +1,6 @@
 import { Text, View } from "../../components/Themed";
 import * as React from "react";
-import { Button, StyleSheet } from "react-native";
+import { Button, Dimensions, StyleSheet } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import Book from "../../types/Book";
 
@@ -11,8 +11,11 @@ interface BookListItemProps {
 
 const BookListItem = ({ book, navigation }: BookListItemProps) => {
   return (
-    <View style={styles.container}>
-      <Card onPress={() => navigation.navigate("BookDetailsScreen")}>
+    <View>
+      <Card
+        style={styles.container}
+        onPress={() => navigation.navigate("BookDetailsScreen", { book: book })}
+      >
         <Card.Content>
           <Title>{book.name}</Title>
           <Paragraph>{book.author}</Paragraph>
@@ -23,8 +26,14 @@ const BookListItem = ({ book, navigation }: BookListItemProps) => {
 };
 export default BookListItem;
 
+const window = Dimensions.get("window");
+const cardHeight = window.width / 3;
+
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 8,
+    width: window.width / 2 - 15,
+    alignItems: "center",
+    height: cardHeight,
+    margin: 5,
   },
 });

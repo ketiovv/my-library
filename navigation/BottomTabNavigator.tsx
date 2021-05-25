@@ -93,12 +93,6 @@ const LibraryNavigator = ({ navigation }: any) => {
         component={BookDetailsScreen}
         options={{
           headerTitle: "Book Details",
-          headerRight: () => (
-            <FontAwesomeIcon
-              icon={faTrash}
-              onClick={() => console.log("test")}
-            />
-          ),
         }}
       />
     </LibraryStack.Navigator>
