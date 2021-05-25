@@ -3,10 +3,13 @@ import {
   DefaultTheme,
   DarkTheme,
 } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from "@react-navigation/stack";
 import firebase from "firebase";
 import * as React from "react";
-import { Button, ColorSchemeName, View } from "react-native";
+import { Button, ColorSchemeName, View, Text } from "react-native";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
@@ -17,6 +20,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../redux/reducers";
 import thunk from "redux-thunk";
+import CustomNavigationBar from "../components/CustomNavigationBar";
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 export type AppDispatch = typeof store.dispatch;
@@ -39,7 +43,7 @@ const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
   });
 
   if (!loaded) {
-    return <View>Loading...</View>;
+    return <Text>Loading..</Text>;
   } else {
     return (
       <NavigationContainer
@@ -59,14 +63,16 @@ const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
 
 export default Navigation;
 
-// A root stack navigator is often used for displaying modals on top of all other content
-// Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Root"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

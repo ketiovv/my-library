@@ -6,6 +6,7 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import * as firebase from "firebase";
 import firebaseConfigJson from "./firebaseConfig.json";
+import { Provider as PaperProvider } from "react-native-paper";
 
 if (firebase.default.apps.length === 0) {
   firebase.default.initializeApp(firebaseConfigJson);
@@ -19,10 +20,12 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+      <PaperProvider>
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </SafeAreaProvider>
+      </PaperProvider>
     );
   }
 }

@@ -17,17 +17,17 @@ const AuthenticationNavigator = () => {
       <AuthenticationStack.Screen
         name="LandingScreen"
         component={LandingScreen}
-        options={{ headerTitle: "Welcome!" }}
+        // options={{ headerTitle: "Welcome!" }}
       />
       <AuthenticationStack.Screen
         name="LoginScreen"
         component={LoginScreen}
-        options={{ headerTitle: "Login" }}
+        // options={{ headerTitle: "Login" }}
       />
       <AuthenticationStack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
-        options={{ headerTitle: "Register" }}
+        // options={{ headerTitle: "Register" }}
       />
     </AuthenticationStack.Navigator>
   );

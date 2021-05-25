@@ -1,8 +1,24 @@
+import firebase from "firebase";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
 
 const MyRatesScreen = () => {
+  const [myRates, setMyRates] = React.useState([]);
+  const loadMyRates = React.useCallback(() => {
+    firebase
+      .firestore()
+      .collection("userbooks")
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.docs.map((doc) => doc.data());
+      });
+  }, []);
+
+  React.useEffect(() => {
+    loadMyRates();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My rates</Text>

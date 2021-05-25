@@ -39,11 +39,7 @@ export const BottomTabNavigator = (props: PropsFromRedux) => {
   }, []);
 
   return (
-    <BottomTab.Navigator
-      initialRouteName="Library"
-      activeColor="white"
-      inactiveColor="gray"
-    >
+    <BottomTab.Navigator initialRouteName="Library">
       <BottomTab.Screen
         name="Library"
         component={LibraryNavigator}
@@ -51,6 +47,7 @@ export const BottomTabNavigator = (props: PropsFromRedux) => {
           tabBarIcon: () => <FontAwesomeIcon icon={faBook} />,
         }}
       />
+
       <BottomTab.Screen
         name="MyRates"
         component={MyRatesNavigator}
@@ -62,7 +59,8 @@ export const BottomTabNavigator = (props: PropsFromRedux) => {
   );
 };
 
-const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+// const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 const LibraryStack = createStackNavigator<LibraryParamList>();
 const LibraryNavigator = ({ navigation }: any) => {
