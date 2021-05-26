@@ -38,9 +38,8 @@ const MyRatesScreen = () => {
   };
 
   const loadRateBookNames = async (data: Rate[]) => {
-    const test = data;
     await Promise.all(
-      test.map(async (rate) => {
+      data.map(async (rate) => {
         await firebase
           .firestore()
           .collection("books")
@@ -54,13 +53,15 @@ const MyRatesScreen = () => {
     ).then(() => {
       setIsLoading(false);
     });
-    setMyRates(test);
+    setMyRates(data);
   };
 
   React.useEffect(() => {
-    loadMyRates().then((data) => {
-      loadRateBookNames(data);
-    });
+    if (isFocused) {
+      loadMyRates().then((data) => {
+        loadRateBookNames(data);
+      });
+    }
   }, [isFocused]);
 
   return (

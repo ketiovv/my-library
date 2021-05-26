@@ -50,7 +50,9 @@ const LibraryScreen = ({ navigation }: any) => {
   };
 
   React.useEffect(() => {
-    loadBooks(searchQuery);
+    if (isFocused) {
+      loadBooks(searchQuery);
+    }
   }, [isFocused]);
 
   return (
