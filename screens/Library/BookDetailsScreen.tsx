@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { Text, View } from "../../components/Themed";
 import { AppDispatch, RootState } from "../../navigation";
 import Book from "../../types/Book";
+import UserBooks from "../../types/UserBooks";
 import { fetchUser } from "../../redux/actions";
 import { Button, RadioButton, TextInput } from "react-native-paper";
 
@@ -23,11 +24,18 @@ interface OwnProps {
 const BookDetailsScreen = (props: OwnProps) => {
   const userUid = firebase.auth().currentUser?.uid;
   const { book }: BookDetailsScreenRouteParams = props.route.params;
-  const [checkedRate, setCheckedRate] = React.useState("third");
+  const [checkedRate, setCheckedRate] = React.useState("3");
 
   const rateBook = () => {
-    console.log(userUid);
-    console.log(checkedRate);
+    firebase
+      .firestore()
+      .collection("userbooks")
+      .add({
+        book: book.uid,
+        rate: +checkedRate,
+        user: userUid,
+      });
+
     props.navigation.navigate("LibraryScreen");
   };
 

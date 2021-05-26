@@ -19,7 +19,7 @@ const LibraryScreen = ({ navigation }: any) => {
   const [books, setBooks] = React.useState<Book[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const loadBooks = React.useCallback((sq: string) => {
+  const loadBooks = (sq: string) => {
     setIsLoading(true);
 
     firebase
@@ -47,7 +47,7 @@ const LibraryScreen = ({ navigation }: any) => {
 
         setIsLoading(false);
       });
-  }, []);
+  };
 
   React.useEffect(() => {
     loadBooks(searchQuery);
@@ -85,6 +85,8 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     marginBottom: 10,
+    marginLeft: 5,
+    marginRight: 5,
   },
   booksContainer: {
     flexDirection: "row",

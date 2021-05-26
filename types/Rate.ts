@@ -1,5 +1,7 @@
-export default interface MyRates {
-    book: string;
+export default interface Rate {
+    uid: string;
     user: string;
+    book: string;
     rate: number;
+    bookName: string;
 }
