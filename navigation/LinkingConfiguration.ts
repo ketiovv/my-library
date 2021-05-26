@@ -9,9 +9,13 @@ export default {
           Library: {
             screens: {
               LibraryScreen: 'library',
-              NewBookScreen: 'new-book',
               BookDetailsScreen: 'book-details',
             },
+          },
+          NewBook: {
+            screens:{
+              NewBookScreen: 'new-book',
+            }
           },
           MyRates: {
             screens: {

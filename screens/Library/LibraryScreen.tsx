@@ -7,6 +7,7 @@ import { ActivityIndicator, Searchbar } from "react-native-paper";
 import Book from "../../types/Book";
 import { ScrollView } from "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/native";
+import Colors from "../../constants/Colors";
 
 const LibraryScreen = ({ navigation }: any) => {
   const isFocused = useIsFocused();
@@ -20,8 +21,6 @@ const LibraryScreen = ({ navigation }: any) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   const loadBooks = (sq: string) => {
-    setIsLoading(true);
-
     firebase
       .firestore()
       .collection("books")
@@ -51,6 +50,7 @@ const LibraryScreen = ({ navigation }: any) => {
 
   React.useEffect(() => {
     if (isFocused) {
+      setIsLoading(true);
       loadBooks(searchQuery);
     }
   }, [isFocused]);
@@ -64,7 +64,11 @@ const LibraryScreen = ({ navigation }: any) => {
         value={searchQuery}
       />
       {isLoading ? (
-        <ActivityIndicator animating={true} color="Black" size="large" />
+        <ActivityIndicator
+          animating={true}
+          color={Colors.material.dark}
+          size="large"
+        />
       ) : (
         <ScrollView contentContainerStyle={styles.booksContainer}>
           {books.map((book, index) => {

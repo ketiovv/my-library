@@ -1,6 +1,8 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import * as React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Button } from "react-native-paper";
+import Colors from "../../constants/Colors";
 import { AuthenticationParamList } from "../../types";
 
 const LandingScreen = ({
@@ -10,13 +12,21 @@ const LandingScreen = ({
     <View style={styles.container}>
       <Text style={styles.title}>Landing page</Text>
       <Button
-        title={"Login"}
+        style={styles.button}
         onPress={() => navigation.navigate("LoginScreen")}
-      />
+        mode="contained"
+        theme={{ colors: { primary: Colors.material.dark } }}
+      >
+        Login
+      </Button>
       <Button
-        title={"Register"}
+        style={styles.button}
         onPress={() => navigation.navigate("RegisterScreen")}
-      />
+        mode="contained"
+        theme={{ colors: { primary: Colors.material.dark } }}
+      >
+        Register
+      </Button>
     </View>
   );
 };
@@ -26,7 +36,6 @@ export default LandingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
@@ -42,5 +51,10 @@ const styles = StyleSheet.create({
   linkText: {
     fontSize: 14,
     color: "#2e78b7",
+  },
+  button: {
+    marginTop: 25,
+    width: "50%",
+    alignSelf: "center",
   },
 });

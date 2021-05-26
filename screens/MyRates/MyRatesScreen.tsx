@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import MyRatesItem from "../../components/MyRates/MyRatesItem";
 import { Text, View } from "../../components/Themed";
+import Colors from "../../constants/Colors";
 import Book from "../../types/Book";
 import Rate from "../../types/Rate";
 
@@ -67,7 +68,11 @@ const MyRatesScreen = () => {
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator animating={true} color="Black" size="large" />
+        <ActivityIndicator
+          animating={true}
+          color={Colors.material.dark}
+          size="large"
+        />
       ) : (
         <ScrollView>
           {myRates.map((rate, index) => {
@@ -84,16 +89,6 @@ export default MyRatesScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+    padding: 10,
   },
 });

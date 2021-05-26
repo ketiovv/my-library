@@ -10,24 +10,19 @@ import { AuthenticationParamList } from "../types";
 const AuthenticationStack = createStackNavigator<AuthenticationParamList>();
 
 const AuthenticationNavigator = () => {
-  const colorScheme = useColorScheme();
-
   return (
-    <AuthenticationStack.Navigator initialRouteName="LandingScreen">
+    <AuthenticationStack.Navigator
+      initialRouteName="LandingScreen"
+      headerMode={"none"}
+    >
       <AuthenticationStack.Screen
         name="LandingScreen"
         component={LandingScreen}
-        // options={{ headerTitle: "Welcome!" }}
       />
-      <AuthenticationStack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        // options={{ headerTitle: "Login" }}
-      />
+      <AuthenticationStack.Screen name="LoginScreen" component={LoginScreen} />
       <AuthenticationStack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
-        // options={{ headerTitle: "Register" }}
       />
     </AuthenticationStack.Navigator>
   );

@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
@@ -13,6 +13,7 @@ import {
   BottomTabParamList,
   LibraryParamList,
   MyRatesParamList,
+  NewBookParamList,
 } from "../types";
 import { fetchUser } from "../redux/actions";
 import { AnyAction, bindActionCreators } from "redux";
@@ -29,6 +30,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { Icon } from "react-native-eva-icons";
 
 export const BottomTabNavigator = (props: PropsFromRedux) => {
   const colorScheme = useColorScheme();
@@ -39,63 +41,93 @@ export const BottomTabNavigator = (props: PropsFromRedux) => {
   }, []);
 
   return (
-    <BottomTab.Navigator initialRouteName="Library">
+    <BottomTab.Navigator
+      initialRouteName="Library"
+      activeColor={Colors.material.white}
+      inactiveColor={Colors.material.black}
+      barStyle={{ backgroundColor: Colors.material.light }}
+    >
       <BottomTab.Screen
         name="Library"
         component={LibraryNavigator}
         options={{
-          tabBarIcon: () => <FontAwesomeIcon icon={faBook} />,
+          tabBarIcon: () => <Ionicons name="library" size={20} color="black" />,
         }}
       />
-
+      <BottomTab.Screen
+        name="NewBook"
+        component={NewBookNavigator}
+        options={{
+          tabBarIcon: () => <Entypo name="plus" size={20} color="black" />,
+        }}
+      />
       <BottomTab.Screen
         name="MyRates"
         component={MyRatesNavigator}
         options={{
-          tabBarIcon: () => <FontAwesomeIcon icon={faStar} />,
+          tabBarIcon: () => <AntDesign name="star" size={20} color="black" />,
         }}
       />
     </BottomTab.Navigator>
   );
 };
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
-// const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
+// const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 const LibraryStack = createStackNavigator<LibraryParamList>();
-const LibraryNavigator = ({ navigation }: any) => {
+const LibraryNavigator = () => {
   return (
-    <LibraryStack.Navigator>
+    <LibraryStack.Navigator initialRouteName="LibraryScreen">
       <LibraryStack.Screen
         name="LibraryScreen"
         component={LibraryScreen}
         options={{
           headerTitle: "Library",
-          headerRight: () => (
-            <View>
-              <FontAwesomeIcon
-                icon={faPlus}
-                onClick={() => navigation.navigate("NewBookScreen")}
-              />
-            </View>
-          ),
+          headerTitleStyle: {
+            color: Colors.material.black,
+          },
+          headerStyle: {
+            backgroundColor: Colors.material.primary,
+          },
         }}
       />
-      <LibraryStack.Screen
-        name="NewBookScreen"
-        component={NewBookScreen}
-        options={{
-          headerTitle: "New book",
-        }}
-      />
+
       <LibraryStack.Screen
         name="BookDetailsScreen"
         component={BookDetailsScreen}
         options={{
           headerTitle: "Book Details",
+          headerTitleStyle: {
+            color: Colors.material.black,
+          },
+          headerStyle: {
+            backgroundColor: Colors.material.primary,
+          },
         }}
       />
     </LibraryStack.Navigator>
+  );
+};
+
+const NewBookStack = createStackNavigator<NewBookParamList>();
+const NewBookNavigator = () => {
+  return (
+    <NewBookStack.Navigator>
+      <NewBookStack.Screen
+        name="NewBookScreen"
+        component={NewBookScreen}
+        options={{
+          headerTitle: "New book",
+          headerTitleStyle: {
+            color: Colors.material.black,
+          },
+          headerStyle: {
+            backgroundColor: Colors.material.primary,
+          },
+        }}
+      />
+    </NewBookStack.Navigator>
   );
 };
 
@@ -108,10 +140,18 @@ const MyRatesNavigator = () => {
         component={MyRatesScreen}
         options={{
           headerTitle: "My rates",
+          headerTitleStyle: {
+            color: Colors.material.black,
+          },
+          headerStyle: {
+            backgroundColor: Colors.material.primary,
+          },
           headerRight: () => (
-            <FontAwesomeIcon
-              icon={faSignOutAlt}
-              onClick={() => firebase.auth().signOut()}
+            <Entypo
+              name="log-out"
+              size={24}
+              color="black"
+              onPress={() => firebase.auth().signOut()}
             />
           ),
         }}

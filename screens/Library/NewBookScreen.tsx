@@ -1,9 +1,11 @@
+import { useIsFocused } from "@react-navigation/native";
 import firebase from "firebase";
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { Text, View } from "../../components/Themed";
+import Colors from "../../constants/Colors";
 
 interface IFormInputs {
   name: string;
@@ -18,7 +20,16 @@ const NewBookScreen = ({ navigation }: any) => {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<IFormInputs>();
+
+  const resetForm = () => {
+    setValue("name", "");
+    setValue("author", "");
+    setValue("category", "");
+    setValue("imgUrl", "");
+    setValue("description", "");
+  };
 
   const onSubmit = (data: IFormInputs) => {
     firebase.firestore().collection("books").add({
@@ -28,20 +39,24 @@ const NewBookScreen = ({ navigation }: any) => {
       imgUrl: data.imgUrl,
       description: data.description,
     });
-
     navigation.navigate("LibraryScreen");
+    resetForm();
   };
 
   return (
     <View style={styles.container}>
-      <Text>Name</Text>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            mode="outlined"
+            label="Title"
+            placeholder="Required"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
+            style={styles.input}
+            theme={{ colors: { primary: Colors.material.dark } }}
           />
         )}
         name="name"
@@ -50,65 +65,86 @@ const NewBookScreen = ({ navigation }: any) => {
       />
       {errors.name && <Text>Name is required.</Text>}
 
-      <Text>Author</Text>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            mode="outlined"
+            label="Author"
+            placeholder="Required"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
+            style={styles.input}
+            theme={{ colors: { primary: Colors.material.dark } }}
           />
         )}
         name="author"
+        rules={{ required: true }}
         defaultValue=""
       />
 
-      <Text>Category</Text>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            mode="outlined"
+            label="Category"
+            placeholder="Not required"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
+            style={styles.input}
+            theme={{ colors: { primary: Colors.material.dark } }}
           />
         )}
         name="category"
-        rules={{ required: true }}
         defaultValue=""
       />
 
-      <Text>Image URL</Text>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            mode="outlined"
+            label="Image url"
+            placeholder="Not required"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
+            style={styles.input}
+            theme={{ colors: { primary: Colors.material.dark } }}
           />
         )}
         name="imgUrl"
-        rules={{ required: true }}
         defaultValue=""
       />
 
-      <Text>Description</Text>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            mode="outlined"
+            label="Description"
+            placeholder="Not required"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
+            style={styles.input}
+            theme={{ colors: { primary: Colors.material.dark } }}
           />
         )}
         name="description"
-        rules={{ required: true }}
         defaultValue=""
       />
-      <Button onPress={handleSubmit(onSubmit)}>Create</Button>
+      <Button
+        style={styles.button}
+        onPress={handleSubmit(onSubmit)}
+        mode="contained"
+        theme={{ colors: { primary: Colors.material.dark } }}
+      >
+        Create
+      </Button>
     </View>
   );
 };
@@ -118,16 +154,15 @@ export default NewBookScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    padding: 25,
+    paddingTop: 50,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  input: {
+    marginBottom: 10,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  button: {
+    marginTop: 25,
+    width: "50%",
+    alignSelf: "center",
   },
 });

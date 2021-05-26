@@ -3,6 +3,7 @@ import * as React from "react";
 import { Button, Dimensions, StyleSheet } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import Book from "../../types/Book";
+import Colors from "../../constants/Colors";
 
 interface BookListItemProps {
   book: Book;
@@ -17,8 +18,8 @@ const BookListItem = ({ book, navigation }: BookListItemProps) => {
         onPress={() => navigation.navigate("BookDetailsScreen", { book: book })}
       >
         <Card.Content>
-          <Title>{book.name}</Title>
-          <Paragraph>{book.author}</Paragraph>
+          <Title style={styles.text}>{book.name}</Title>
+          <Paragraph style={styles.text}>{book.author}</Paragraph>
         </Card.Content>
       </Card>
     </View>
@@ -32,8 +33,12 @@ const cardHeight = window.width / 3;
 const styles = StyleSheet.create({
   container: {
     width: window.width / 2 - 15,
-    alignItems: "center",
+    alignItems: "flex-start",
     height: cardHeight,
     margin: 5,
+    backgroundColor: Colors.material.primary,
+  },
+  text: {
+    color: Colors.material.white,
   },
 });

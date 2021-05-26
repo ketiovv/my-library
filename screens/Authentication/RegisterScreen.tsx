@@ -1,9 +1,11 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import * as React from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AuthenticationParamList } from "../../types";
 import firebase from "firebase";
 import "firebase/firestore";
+import { Button, TextInput, Text, Title } from "react-native-paper";
+import Colors from "../../constants/Colors";
 
 const RegisterScreen = ({
   navigation,
@@ -31,14 +33,43 @@ const RegisterScreen = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Register page</Text>
-      <TextInput placeholder="email" onChangeText={(text) => setEmail(text)} />
+      <Title style={styles.title}>Register page</Title>
       <TextInput
-        placeholder="password"
+        onChangeText={(text) => setEmail(text)}
+        mode="outlined"
+        label="Login"
+        placeholder="Not required"
+        theme={{ colors: { primary: Colors.material.dark } }}
+      />
+      <TextInput
         secureTextEntry={true}
         onChangeText={(text) => setPassword(text)}
+        mode="outlined"
+        label="Password"
+        placeholder="Not required"
+        theme={{ colors: { primary: Colors.material.dark } }}
       />
-      <Button onPress={handleRegister} title="Sign Up" />
+
+      <View style={styles.buttonContainer}>
+        <Button
+          style={styles.button}
+          onPress={handleRegister}
+          mode="contained"
+          theme={{ colors: { primary: Colors.material.dark } }}
+        >
+          Sign Up
+        </Button>
+        <Button
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("LandingScreen");
+          }}
+          mode="contained"
+          theme={{ colors: { primary: Colors.material.dark } }}
+        >
+          Cancel
+        </Button>
+      </View>
     </View>
   );
 };
@@ -48,21 +79,23 @@ export default RegisterScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
+    padding: 25,
+    paddingTop: "40%",
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    alignSelf: "center",
+    fontSize: 30,
+    marginBottom: 20,
   },
-  link: {
+  input: {
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    marginTop: 35,
+  },
+  button: {
     marginTop: 15,
-    paddingVertical: 15,
-  },
-  linkText: {
-    fontSize: 14,
-    color: "#2e78b7",
+    width: "50%",
+    alignSelf: "center",
   },
 });

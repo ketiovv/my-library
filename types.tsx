@@ -11,13 +11,17 @@ export type RootStackParamList = {
 
 export type BottomTabParamList = {
   Library: undefined;
+  NewBook: undefined;
   MyRates: undefined;
 };
 
 export type LibraryParamList = {
   LibraryScreen: undefined;
-  NewBookScreen: undefined;
   BookDetailsScreen: undefined;
+};
+
+export type NewBookParamList = {
+  NewBookScreen: undefined;
 };
 
 export type MyRatesParamList = {
