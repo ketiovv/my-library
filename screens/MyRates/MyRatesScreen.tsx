@@ -63,6 +63,9 @@ const MyRatesScreen = () => {
         loadRateBookNames(data);
       });
     }
+    if (!isFocused) {
+      setMyRates([]);
+    }
   }, [isFocused]);
 
   return (

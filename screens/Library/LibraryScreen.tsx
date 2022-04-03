@@ -53,6 +53,9 @@ const LibraryScreen = ({ navigation }: any) => {
       setIsLoading(true);
       loadBooks(searchQuery);
     }
+    if (!isFocused) {
+      setBooks([]);
+    }
   }, [isFocused]);
 
   return (
